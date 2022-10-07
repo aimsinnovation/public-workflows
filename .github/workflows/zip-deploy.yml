@@ -28,7 +28,7 @@ jobs:
       with:
         name: ${{ inputs.artifact-name }}
 
-    - name: "Check artifact files"
+    - name: "Check All Files and Folders"
       run: |
         ls -la
 
@@ -41,6 +41,6 @@ jobs:
     - name: "Deploy azure"
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: ${{ github.event.inputs.app-name }}
+        app-name: ${{ inputs.app-name }}
         publish-profile: ${{ secrets.PUBLISH_PROFILE }}
-        package: ${{ github.event.inputs.app-name }}
+        package: ${{ inputs.app-name }}
