@@ -25,7 +25,11 @@ jobs:
     - name: "Download artifact"
       uses: actions/download-artifact@v3
       with:
-        name: ${{ github.event.inputs.artifact-name }}
+        name: ${{ inputs.artifact-name }}
+
+    - names: "Check artifact files"
+      run: |
+        ls -la ${{ inputs.artifact-name }}
 
     - name: "Unzip artifact"
       run: unzip ${{ inputs.artifact-name }}.zip -d ./${{ inputs.app-name }}
