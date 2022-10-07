@@ -9,6 +9,9 @@ on:
       app-name: 
         required: true
         type: string
+    secrets:
+      PUBLISH_PROFILE:
+        required: true
 
 jobs:
   deployment:
@@ -24,8 +27,15 @@ jobs:
       with:
         name: ${{ github.event.inputs.artifact-name }}
 
+    - name: "Unzip artifact"
+        run: zip x app.zip -o./${{ github.event.inputs.app-name }}
+
+    - name: "Check artifact files"
+        run: ls -la ${{ github.event.inputs.app-name }}
+
     - name: "Deploy azure"
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ github.event.inputs.app-name }}
         publish-profile: ${{ secrets.PUBLISH_PROFILE }}
+        package: ${{ github.event.inputs.app-name }}
