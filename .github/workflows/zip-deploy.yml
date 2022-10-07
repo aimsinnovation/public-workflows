@@ -27,7 +27,7 @@ jobs:
       with:
         name: ${{ github.event.inputs.artifact-name }}
     - name: "Unzip artifact"
-      run: zip x app.zip -o./${{ github.event.inputs.app-name }}
+      run: unzip ${{ github.event.inputs.artifact-name }}.zip -d ./${{ github.event.inputs.app-name }}
 
     - name: "Check artifact files"
       run: ls -la ${{ github.event.inputs.app-name }}
