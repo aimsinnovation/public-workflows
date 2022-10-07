@@ -30,7 +30,7 @@ jobs:
     - name: "Check files"
       run: |
         ls -la
-        echo ${{ github.event.inputs.artifact-name }}
+        echo '${{ inputs.artifact-name }} as'
         ls -la ${{ github.event.inputs.artifact-name }}
 
     - name: "Unzip artifact"
