@@ -30,7 +30,7 @@ jobs:
 
     - name: "Check artifact files"
       run: |
-        ls -la ${{ inputs.artifact-name }}
+        ls -la
 
     - name: "Unzip artifact"
       run: unzip ${{ inputs.artifact-name }}.zip -d ./${{ inputs.app-name }}
