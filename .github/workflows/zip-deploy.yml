@@ -27,17 +27,11 @@ jobs:
       with:
         name: ${{ github.event.inputs.artifact-name }}
 
-    - name: "Check files"
-      run: |
-        ls -la
-        echo '${{ inputs.artifact-name }} as'
-        ls -la ${{ github.event.inputs.artifact-name }}
-
     - name: "Unzip artifact"
-      run: unzip ${{ github.event.inputs.artifact-name }}.zip -d ./${{ github.event.inputs.app-name }}
+      run: unzip ${{ inputs.artifact-name }}.zip -d ./${{ inputs.app-name }}
 
     - name: "Check artifact files"
-      run: ls -la ${{ github.event.inputs.app-name }}
+      run: ls -la ${{ inputs.app-name }}
 
     - name: "Deploy azure"
       uses: azure/webapps-deploy@v2
