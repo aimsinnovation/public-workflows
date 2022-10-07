@@ -26,12 +26,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: ${{ github.event.inputs.artifact-name }}
-
     - name: "Unzip artifact"
-        run: zip x app.zip -o./${{ github.event.inputs.app-name }}
+      run: zip x app.zip -o./${{ github.event.inputs.app-name }}
 
     - name: "Check artifact files"
-        run: ls -la ${{ github.event.inputs.app-name }}
+      run: ls -la ${{ github.event.inputs.app-name }}
 
     - name: "Deploy azure"
       uses: azure/webapps-deploy@v2
