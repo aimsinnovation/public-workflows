@@ -27,7 +27,7 @@ jobs:
       with:
         name: ${{ inputs.artifact-name }}
 
-    - names: "Check artifact files"
+    - name: "Check artifact files"
       run: |
         ls -la ${{ inputs.artifact-name }}
 
