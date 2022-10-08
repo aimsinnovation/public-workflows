@@ -2,9 +2,6 @@ name: Deploy via scm
 
 on:
   workflow_call:
-    secrets: 
-      scm_auth:
-        required: true
     inputs: 
       scm_url:
         required: true
