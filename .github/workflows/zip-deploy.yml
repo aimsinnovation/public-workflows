@@ -1,12 +1,16 @@
-name: Deploy from zip
+name: Deploy via scm
 
 on:
   workflow_call:
-    inputs: 
-      artifact-name: 
+    secrets: 
+      scm_auth:
         required: true
         type: string
-      app-name: 
+    inputs: 
+      scm_url:
+        required: true
+        type: string
+      artifact_name: 
         required: true
         type: string
 
@@ -14,18 +18,11 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps: 
-    - name: Setup Node 
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16
-
     - name: "Download artifact"
       uses: actions/download-artifact@v3
       with:
-        name: ${{ github.event.inputs.artifact-name }}
+        name: ${{ github.event.inputs.artifact_name }}
 
     - name: "Deploy azure"
-      uses: azure/webapps-deploy@v2
-      with: 
-        app-name: ${{ github.event.inputs.app-name }}
-        publish-profile: ${{ secrets.PUBLISH_PROFILE }}
+      run: | 
+        curl --progress-meter -X POST -u "${{ secrets.scm_auth }}" ${{ github.events.scm_url }} -T "app.zip" > /dev/null
