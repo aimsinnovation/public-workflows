@@ -5,7 +5,6 @@ on:
     secrets: 
       scm_auth:
         required: true
-        type: string
     inputs: 
       scm_url:
         required: true
@@ -21,8 +20,8 @@ jobs:
     - name: "Download artifact"
       uses: actions/download-artifact@v3
       with:
-        name: ${{ github.event.inputs.artifact_name }}
+        name: ${{ inputs.artifact_name }}
 
     - name: "Deploy azure"
       run: | 
-        curl --progress-meter -X POST -u "${{ secrets.scm_auth }}" ${{ github.events.scm_url }} -T "app.zip" > /dev/null
+        curl --progress-meter -X POST -u "${{ secrets.scm_auth }}" ${{ inputs.scm_url }} -T "app.zip" > /dev/null
