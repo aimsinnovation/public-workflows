@@ -1,6 +1,14 @@
 name: Deploy via scm
 
 on:
+  workflow_dispatch:
+    inputs: 
+      scm_url:
+        required: true
+        type: string
+      artifact_name: 
+        required: true
+        type: string
   workflow_call:
     inputs: 
       scm_url:
@@ -21,4 +29,9 @@ jobs:
 
     - name: "Deploy azure"
       run: | 
-        curl --progress-meter -X POST -u "${{ secrets.SCM_AUTH }}" ${{ inputs.scm_url }} -T "app.zip" > /dev/null
+        http_status=$(curl -s -v -w "%{http_code}"  \
+          -X POST
+          -u "${{ secrets.ZIP_DEPLOY_GLOBAL_SCOPE_USER_CREDENTIALS }}" ${{ inputs.scm_url }} \
+          -T "app.zip")
+
+        [[ $http_res = "200" ]] && echo "Deployment successful" || exit 1;
