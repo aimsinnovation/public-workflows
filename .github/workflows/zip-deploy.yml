@@ -29,9 +29,8 @@ jobs:
 
     - name: "Deploy azure"
       run: | 
-        http_res=$(curl -s -v -w "%{http_code}" --location \
-          --request POST ${{ inputs.scm_url }} \
-          --header "Authorization: Basic ${{ secrets.ZIP_DEPLOY_GLOBAL_SCOPE_USER_CREDENTIALS }}" \
-          --data-binary "@app.zip")
-
+        http_res=$(curl -s -v -o dev/null -w "%{http_code}" \
+          -X POST ${{ inputs.scm_url }} \
+          -u "${{ secrets.ZIP_DEPLOY_GLOBAL_SCOPE_USER_CREDENTIALS }}" \
+          -T app.zip)
         [[ $http_res = "200" ]] && echo "Deployment successful" || exit 1;
