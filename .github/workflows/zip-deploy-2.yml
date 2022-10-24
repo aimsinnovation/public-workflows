@@ -3,18 +3,13 @@ name: Perform zip deployment
 on:
   workflow_dispatch:
     inputs: 
-      scm_url:
-        required: true
+      auth: 
         type: string
-      artifact_name: 
         required: true
+      repo:
         type: string
-      run_id: 
         required: true
-        type: string
-      repo: 
-        required: true
-        type: string
+
   workflow_call:
     inputs: 
       scm_url:
@@ -32,7 +27,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         # name: ${{ inputs.artifact_name }}
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ github.event.inputs.auth }}
         repo: ${{ inputs.repo || github.repository }}
         check_artifacts: true
         # run_id: ${{inputs.run_id}}
