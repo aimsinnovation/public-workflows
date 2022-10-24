@@ -25,12 +25,16 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps: 
+    - name: "Echo params"
+      run: |
+        echo ${{ inputs.commit }}
+
     - name: "Download artifact"
       uses: dawidd6/action-download-artifact@v2
       with:
         name: ${{ inputs.artifact_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        commit: ${{github.event.pull_request.head.sha}}
+        commit: ${{ inputs.commit || github.event.pull_request.head.sha}}
 
     - name: "Display"
       run: |
