@@ -1,0 +1,45 @@
+name: Deploy via scm
+
+on:
+  workflow_dispatch:
+    inputs: 
+      scm_url:
+        required: true
+        type: string
+      artifact_name: 
+        required: true
+        type: string
+  workflow_call:
+    inputs: 
+      scm_url:
+        required: true
+        type: string
+      artifact_name: 
+        required: true
+        type: string
+      commit: 
+        required: true
+        type: string
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: "Download artifact"
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        name: ${{ inputs.artifact_name }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit: ${{github.event.pull_request.head.sha}}
+
+    - name: "Display"
+      run: |
+        zip -sf app.zip
+
+    # - name: "Deploy azure"
+    #   run: | 
+    #     http_res=$(curl -s -v -o dev/null -w "%{http_code}" \
+    #       -X POST ${{ inputs.scm_url }} \
+    #       -u "${{ secrets.ZIP_DEPLOY_GLOBAL_SCOPE_USER_CREDENTIALS }}" \
+    #       -T app.zip)
+    #     [[ $http_res = "200" ]] && echo "Deployment successful" || exit 1;
