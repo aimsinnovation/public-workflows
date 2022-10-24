@@ -12,6 +12,9 @@ on:
       commit: 
         required: true
         type: string
+      repo: 
+        required: true
+        type: string
   workflow_call:
     inputs: 
       scm_url:
@@ -35,6 +38,7 @@ jobs:
         name: ${{ inputs.artifact_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
         commit: ${{ inputs.commit || github.event.pull_request.head.sha}}
+        repo: ${{ inputs.repo || github.repository }}
 
     - name: "Display"
       run: |
