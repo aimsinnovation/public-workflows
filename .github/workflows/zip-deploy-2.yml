@@ -28,21 +28,19 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps: 
-    - name: "Echo params"
-      run: |
-        echo ${{ inputs.commit }}
-
     - name: "Download artifact"
       uses: dawidd6/action-download-artifact@v2
       with:
-        name: ${{ inputs.artifact_name }}
+        # name: ${{ inputs.artifact_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
         repo: ${{ inputs.repo || github.repository }}
-        run_id: ${{inputs.run_id}}
+        check_artifacts: true
+        # run_id: ${{inputs.run_id}}
 
     - name: "Display"
       run: |
-        zip -sf app.zip
+        ls -la 
+        # zip -sf app.zip
 
     # - name: "Deploy azure"
     #   run: | 
