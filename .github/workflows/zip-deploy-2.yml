@@ -9,7 +9,7 @@ on:
       artifact_name: 
         required: true
         type: string
-      commit: 
+      run_id: 
         required: true
         type: string
       repo: 
@@ -37,8 +37,8 @@ jobs:
       with:
         name: ${{ inputs.artifact_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        commit: ${{ inputs.commit || github.event.pull_request.head.sha}}
         repo: ${{ inputs.repo || github.repository }}
+        run_id: ${{inputs.run_id}}
 
     - name: "Display"
       run: |
